@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  mosquitto:
+    hostname: mosquitto
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    container_name: mqtt
+    volumes:
+      - ./mqtt_container_conf/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mqtt_container_conf/mosquitto.passwd:/mosquitto/config/mosquitto.passwd
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+#  redis:
+#    image: redis:latest
+#    restart: unless-stopped
+#    ports:
+#      - 6379:6379
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

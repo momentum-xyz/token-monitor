@@ -1,0 +1,50 @@
+log:
+  level: 0
+mqtt:
+  host: localhost
+  port: 1883
+  user: mqttuser
+  password: password
+  topics:
+    registration_topic: users
+    active_users_topic: active-users
+    active_rules_topic: active-rules
+    rules_topic: rules
+cache:
+  type: "bbolt"
+  bbolt:
+    path: "dev.db"
+    fileMode: 0600
+    bucketName: "dev"
+
+network_manager:
+  networks:
+    - name: eth_mainnet
+      type: ethereum
+      hosts:
+        - url: https://mainnet.infura.io/v3/my-rpc
+          rate_limit: 300
+          burst_limit: 300
+        - url: https://mainnet.infura.io/v3/my-2nd-rpc
+          rate_limit: 200
+          burst_limit: 50
+          batch_size: 1
+    - name: eth_ropsten
+      type: ethereum
+      hosts:
+        - url: https://username:password@custom-ethereum-network-rpc
+          rate_limit: 100
+          burst_limit: 10
+          batch_size: 1000
+        - url: https://ropsten.infura.io/v3/my-rpc
+          rate_limit: 100
+          batch_size: 1
+        - url: https://ropsten.infura.io/v3/my-2nd-rpc
+          rate_limit: 100
+          batch_size: 1
+    # - name: polkadot
+    #   type: polkadot
+    #   hosts:
+    #     - url: https://polkadot.infura.dummy
+    #       rateLimit: 100
+    #       batchSize: 1
