@@ -68,6 +68,7 @@ func StartNewBalanceTracker(ctx context.Context, id int, tokenType string, token
 type contract interface {
 	getLogs(opts *bind.FilterOpts, userAddresses []common.Address) ([]logItem, error)
 	balanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error)
+	tokenName(opts *bind.CallOpts) (string, error)
 }
 
 func initialize(ctx context.Context, id int, client *ethclient.Client, users []string, pendingUserCh chan common.Address, c cache.Cache, contract contract, notify BalanceNotifierFunc) {

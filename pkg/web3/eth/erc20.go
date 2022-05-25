@@ -55,3 +55,7 @@ func (t *erc20Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.Ad
 func (t *erc20Contract) balanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error) {
 	return t.contract.BalanceOf(opts, userAddress)
 }
+
+func (t *erc20Contract) tokenName(opts *bind.CallOpts) (string, error) {
+	return t.contract.Name(opts)
+}

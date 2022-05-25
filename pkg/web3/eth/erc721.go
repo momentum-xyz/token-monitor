@@ -11,6 +11,7 @@ import (
 
 type erc721Contract struct {
 	contract *abigen.ERC721
+	metadata *abigen.ERC721Metadata
 }
 
 func newERC721Contract(addressHex string, client bind.ContractBackend) (*erc721Contract, error) {
@@ -22,8 +23,13 @@ func newERC721Contract(addressHex string, client bind.ContractBackend) (*erc721C
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to create ERC721 contract for %s", contractAddress.String())
 	}
+	metadata, err := abigen.NewERC721Metadata(contractAddress, client)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to create ERC721 metadata for %s", contractAddress.String())
+	}
 	return &erc721Contract{
 		contract: contract,
+		metadata: metadata,
 	}, nil
 }
 
@@ -54,4 +60,8 @@ func (t *erc721Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.A
 
 func (t *erc721Contract) balanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error) {
 	return t.contract.BalanceOf(opts, userAddress)
+}
+
+func (t *erc721Contract) tokenName(opts *bind.CallOpts) (string, error) {
+	return t.metadata.Name(opts)
 }

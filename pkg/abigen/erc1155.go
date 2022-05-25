@@ -30,7 +30,7 @@ var (
 
 // ERC1155MetaData contains all meta data concerning the ERC1155 contract.
 var ERC1155MetaData = &bind.MetaData{
-	ABI: "[{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_id\",\"type\":\"uint256\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_ids\",\"type\":\"uint256[]\"},{\"name\":\"_values\",\"type\":\"uint256[]\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"safeBatchTransferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owners\",\"type\":\"address[]\"},{\"name\":\"_ids\",\"type\":\"uint256[]\"}],\"name\":\"balanceOfBatch\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"},{\"name\":\"_approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_from\",\"type\":\"address\"},{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_id\",\"type\":\"uint256\"},{\"name\":\"_value\",\"type\":\"uint256\"},{\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"_operator\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_id\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"TransferSingle\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"_operator\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_ids\",\"type\":\"uint256[]\"},{\"indexed\":false,\"name\":\"_values\",\"type\":\"uint256[]\"}],\"name\":\"TransferBatch\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"_owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"_operator\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_value\",\"type\":\"string\"},{\"indexed\":true,\"name\":\"_id\",\"type\":\"uint256\"}],\"name\":\"URI\",\"type\":\"event\"}]",
+	ABI: "[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"_approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_operator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"_ids\",\"type\":\"uint256[]\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"_values\",\"type\":\"uint256[]\"}],\"name\":\"TransferBatch\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_operator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"TransferSingle\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_value\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"}],\"name\":\"URI\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"_owners\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"_ids\",\"type\":\"uint256[]\"}],\"name\":\"balanceOfBatch\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"_ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"_values\",\"type\":\"uint256[]\"},{\"internalType\":\"bytes\",\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"safeBatchTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"_approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 	Sigs: map[string]string{
 		"00fdd58e": "balanceOf(address,uint256)",
 		"4e1273f4": "balanceOfBatch(address[],uint256[])",
@@ -972,5 +972,194 @@ func (_ERC1155 *ERC1155Filterer) ParseURI(log types.Log) (*ERC1155URI, error) {
 	}
 	event.Raw = log
 	return event, nil
+}
+
+// ERC1155MetadataURIMetaData contains all meta data concerning the ERC1155MetadataURI contract.
+var ERC1155MetadataURIMetaData = &bind.MetaData{
+	ABI: "[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"}],\"name\":\"uri\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	Sigs: map[string]string{
+		"0e89341c": "uri(uint256)",
+	},
+}
+
+// ERC1155MetadataURIABI is the input ABI used to generate the binding from.
+// Deprecated: Use ERC1155MetadataURIMetaData.ABI instead.
+var ERC1155MetadataURIABI = ERC1155MetadataURIMetaData.ABI
+
+// Deprecated: Use ERC1155MetadataURIMetaData.Sigs instead.
+// ERC1155MetadataURIFuncSigs maps the 4-byte function signature to its string representation.
+var ERC1155MetadataURIFuncSigs = ERC1155MetadataURIMetaData.Sigs
+
+// ERC1155MetadataURI is an auto generated Go binding around an Ethereum contract.
+type ERC1155MetadataURI struct {
+	ERC1155MetadataURICaller     // Read-only binding to the contract
+	ERC1155MetadataURITransactor // Write-only binding to the contract
+	ERC1155MetadataURIFilterer   // Log filterer for contract events
+}
+
+// ERC1155MetadataURICaller is an auto generated read-only Go binding around an Ethereum contract.
+type ERC1155MetadataURICaller struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// ERC1155MetadataURITransactor is an auto generated write-only Go binding around an Ethereum contract.
+type ERC1155MetadataURITransactor struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// ERC1155MetadataURIFilterer is an auto generated log filtering Go binding around an Ethereum contract events.
+type ERC1155MetadataURIFilterer struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// ERC1155MetadataURISession is an auto generated Go binding around an Ethereum contract,
+// with pre-set call and transact options.
+type ERC1155MetadataURISession struct {
+	Contract     *ERC1155MetadataURI // Generic contract binding to set the session for
+	CallOpts     bind.CallOpts       // Call options to use throughout this session
+	TransactOpts bind.TransactOpts   // Transaction auth options to use throughout this session
+}
+
+// ERC1155MetadataURICallerSession is an auto generated read-only Go binding around an Ethereum contract,
+// with pre-set call options.
+type ERC1155MetadataURICallerSession struct {
+	Contract *ERC1155MetadataURICaller // Generic contract caller binding to set the session for
+	CallOpts bind.CallOpts             // Call options to use throughout this session
+}
+
+// ERC1155MetadataURITransactorSession is an auto generated write-only Go binding around an Ethereum contract,
+// with pre-set transact options.
+type ERC1155MetadataURITransactorSession struct {
+	Contract     *ERC1155MetadataURITransactor // Generic contract transactor binding to set the session for
+	TransactOpts bind.TransactOpts             // Transaction auth options to use throughout this session
+}
+
+// ERC1155MetadataURIRaw is an auto generated low-level Go binding around an Ethereum contract.
+type ERC1155MetadataURIRaw struct {
+	Contract *ERC1155MetadataURI // Generic contract binding to access the raw methods on
+}
+
+// ERC1155MetadataURICallerRaw is an auto generated low-level read-only Go binding around an Ethereum contract.
+type ERC1155MetadataURICallerRaw struct {
+	Contract *ERC1155MetadataURICaller // Generic read-only contract binding to access the raw methods on
+}
+
+// ERC1155MetadataURITransactorRaw is an auto generated low-level write-only Go binding around an Ethereum contract.
+type ERC1155MetadataURITransactorRaw struct {
+	Contract *ERC1155MetadataURITransactor // Generic write-only contract binding to access the raw methods on
+}
+
+// NewERC1155MetadataURI creates a new instance of ERC1155MetadataURI, bound to a specific deployed contract.
+func NewERC1155MetadataURI(address common.Address, backend bind.ContractBackend) (*ERC1155MetadataURI, error) {
+	contract, err := bindERC1155MetadataURI(address, backend, backend, backend)
+	if err != nil {
+		return nil, err
+	}
+	return &ERC1155MetadataURI{ERC1155MetadataURICaller: ERC1155MetadataURICaller{contract: contract}, ERC1155MetadataURITransactor: ERC1155MetadataURITransactor{contract: contract}, ERC1155MetadataURIFilterer: ERC1155MetadataURIFilterer{contract: contract}}, nil
+}
+
+// NewERC1155MetadataURICaller creates a new read-only instance of ERC1155MetadataURI, bound to a specific deployed contract.
+func NewERC1155MetadataURICaller(address common.Address, caller bind.ContractCaller) (*ERC1155MetadataURICaller, error) {
+	contract, err := bindERC1155MetadataURI(address, caller, nil, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &ERC1155MetadataURICaller{contract: contract}, nil
+}
+
+// NewERC1155MetadataURITransactor creates a new write-only instance of ERC1155MetadataURI, bound to a specific deployed contract.
+func NewERC1155MetadataURITransactor(address common.Address, transactor bind.ContractTransactor) (*ERC1155MetadataURITransactor, error) {
+	contract, err := bindERC1155MetadataURI(address, nil, transactor, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &ERC1155MetadataURITransactor{contract: contract}, nil
+}
+
+// NewERC1155MetadataURIFilterer creates a new log filterer instance of ERC1155MetadataURI, bound to a specific deployed contract.
+func NewERC1155MetadataURIFilterer(address common.Address, filterer bind.ContractFilterer) (*ERC1155MetadataURIFilterer, error) {
+	contract, err := bindERC1155MetadataURI(address, nil, nil, filterer)
+	if err != nil {
+		return nil, err
+	}
+	return &ERC1155MetadataURIFilterer{contract: contract}, nil
+}
+
+// bindERC1155MetadataURI binds a generic wrapper to an already deployed contract.
+func bindERC1155MetadataURI(address common.Address, caller bind.ContractCaller, transactor bind.ContractTransactor, filterer bind.ContractFilterer) (*bind.BoundContract, error) {
+	parsed, err := abi.JSON(strings.NewReader(ERC1155MetadataURIABI))
+	if err != nil {
+		return nil, err
+	}
+	return bind.NewBoundContract(address, parsed, caller, transactor, filterer), nil
+}
+
+// Call invokes the (constant) contract method with params as input values and
+// sets the output to result. The result type might be a single field for simple
+// returns, a slice of interfaces for anonymous returns and a struct for named
+// returns.
+func (_ERC1155MetadataURI *ERC1155MetadataURIRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
+	return _ERC1155MetadataURI.Contract.ERC1155MetadataURICaller.contract.Call(opts, result, method, params...)
+}
+
+// Transfer initiates a plain transaction to move funds to the contract, calling
+// its default method if one is available.
+func (_ERC1155MetadataURI *ERC1155MetadataURIRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _ERC1155MetadataURI.Contract.ERC1155MetadataURITransactor.contract.Transfer(opts)
+}
+
+// Transact invokes the (paid) contract method with params as input values.
+func (_ERC1155MetadataURI *ERC1155MetadataURIRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _ERC1155MetadataURI.Contract.ERC1155MetadataURITransactor.contract.Transact(opts, method, params...)
+}
+
+// Call invokes the (constant) contract method with params as input values and
+// sets the output to result. The result type might be a single field for simple
+// returns, a slice of interfaces for anonymous returns and a struct for named
+// returns.
+func (_ERC1155MetadataURI *ERC1155MetadataURICallerRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
+	return _ERC1155MetadataURI.Contract.contract.Call(opts, result, method, params...)
+}
+
+// Transfer initiates a plain transaction to move funds to the contract, calling
+// its default method if one is available.
+func (_ERC1155MetadataURI *ERC1155MetadataURITransactorRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _ERC1155MetadataURI.Contract.contract.Transfer(opts)
+}
+
+// Transact invokes the (paid) contract method with params as input values.
+func (_ERC1155MetadataURI *ERC1155MetadataURITransactorRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _ERC1155MetadataURI.Contract.contract.Transact(opts, method, params...)
+}
+
+// Uri is a free data retrieval call binding the contract method 0x0e89341c.
+//
+// Solidity: function uri(uint256 _id) view returns(string)
+func (_ERC1155MetadataURI *ERC1155MetadataURICaller) Uri(opts *bind.CallOpts, _id *big.Int) (string, error) {
+	var out []interface{}
+	err := _ERC1155MetadataURI.contract.Call(opts, &out, "uri", _id)
+
+	if err != nil {
+		return *new(string), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
+
+	return out0, err
+
+}
+
+// Uri is a free data retrieval call binding the contract method 0x0e89341c.
+//
+// Solidity: function uri(uint256 _id) view returns(string)
+func (_ERC1155MetadataURI *ERC1155MetadataURISession) Uri(_id *big.Int) (string, error) {
+	return _ERC1155MetadataURI.Contract.Uri(&_ERC1155MetadataURI.CallOpts, _id)
+}
+
+// Uri is a free data retrieval call binding the contract method 0x0e89341c.
+//
+// Solidity: function uri(uint256 _id) view returns(string)
+func (_ERC1155MetadataURI *ERC1155MetadataURICallerSession) Uri(_id *big.Int) (string, error) {
+	return _ERC1155MetadataURI.Contract.Uri(&_ERC1155MetadataURI.CallOpts, _id)
 }
 
