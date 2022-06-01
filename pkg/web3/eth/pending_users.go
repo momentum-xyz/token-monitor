@@ -3,6 +3,7 @@ package eth
 import (
 	"context"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
+	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
 	"math/big"
 	"sync"
 	"time"
@@ -13,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func managePendingUsers(ctx context.Context, id int, client *ethclient.Client, c cache.Cache, contract contract, notify BalanceNotifierFunc, blockCh <-chan uint64, pendingCh <-chan common.Address, activeCh chan<- common.Address) {
+func managePendingUsers(ctx context.Context, id int, client *ethclient.Client, c cache.Cache, contract types.Contract, notify BalanceNotifierFunc, blockCh <-chan uint64, pendingCh <-chan common.Address, activeCh chan<- common.Address) {
 	nextBlock := uint64(0)
 	users := make([]common.Address, 0)
 	ticker := time.NewTicker(time.Second)
@@ -41,7 +42,7 @@ func managePendingUsers(ctx context.Context, id int, client *ethclient.Client, c
 	}
 }
 
-func handlePendingUsers(ctx context.Context, id int, c cache.Cache, blockNumber uint64, contract contract, notify BalanceNotifierFunc, activeCh chan<- common.Address, users ...common.Address) ([]common.Address, error) {
+func handlePendingUsers(ctx context.Context, id int, c cache.Cache, blockNumber uint64, contract types.Contract, notify BalanceNotifierFunc, activeCh chan<- common.Address, users ...common.Address) ([]common.Address, error) {
 	balances := make(map[string]*cache.UserBalance, len(users))
 	failed := make(map[string]bool, len(users))
 	remainingUsers := make([]common.Address, 0)
@@ -63,7 +64,7 @@ func handlePendingUsers(ctx context.Context, id int, c cache.Cache, blockNumber 
 			defer wg.Done()
 
 			// TODO use the multicall contract or the ERC1155 BalanceOfBatch to speed this up
-			b, err := contract.balanceOf(&bind.CallOpts{Context: ctx, BlockNumber: new(big.Int).SetUint64(blockNumber)}, user)
+			b, err := contract.BalanceOf(&bind.CallOpts{Context: ctx, BlockNumber: new(big.Int).SetUint64(blockNumber)}, user)
 			if err != nil {
 				failed[user.String()] = true
 				return

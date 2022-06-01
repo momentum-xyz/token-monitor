@@ -1,6 +1,7 @@
 package eth
 
 import (
+	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
 	"math/big"
 
 	"github.com/OdysseyMomentumExperience/token-service/pkg/abigen"
@@ -13,7 +14,7 @@ type erc20Contract struct {
 	contract *abigen.ERC20
 }
 
-func newERC20Contract(addressHex string, client bind.ContractBackend) (*erc20Contract, error) {
+func NewERC20Contract(addressHex string, client bind.ContractBackend) (*erc20Contract, error) {
 	contractAddress, err := HexToAddress(addressHex)
 	if err != nil {
 		return nil, err
@@ -27,16 +28,16 @@ func newERC20Contract(addressHex string, client bind.ContractBackend) (*erc20Con
 	}, nil
 }
 
-func (t *erc20Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.Address) ([]logItem, error) {
-	res := make([]logItem, 0)
+func (t *erc20Contract) GetLogs(opts *bind.FilterOpts, userAddresses []common.Address) ([]types.LogItem, error) {
+	res := make([]types.LogItem, 0)
 	senderLogs, err := t.contract.FilterTransfer(opts, userAddresses, nil)
 	if err != nil {
 		return nil, err
 	}
 	for senderLogs.Next() {
-		res = append(res, logItem{
-			user:  senderLogs.Event.From,
-			value: new(big.Int).Neg(senderLogs.Event.Value),
+		res = append(res, types.LogItem{
+			User:  senderLogs.Event.From,
+			Value: new(big.Int).Neg(senderLogs.Event.Value),
 		})
 	}
 	receiverLogs, err := t.contract.FilterTransfer(opts, nil, userAddresses)
@@ -44,18 +45,18 @@ func (t *erc20Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.Ad
 		return nil, err
 	}
 	for receiverLogs.Next() {
-		res = append(res, logItem{
-			user:  receiverLogs.Event.To,
-			value: receiverLogs.Event.Value,
+		res = append(res, types.LogItem{
+			User:  receiverLogs.Event.To,
+			Value: receiverLogs.Event.Value,
 		})
 	}
 	return res, nil
 }
 
-func (t *erc20Contract) balanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error) {
+func (t *erc20Contract) BalanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error) {
 	return t.contract.BalanceOf(opts, userAddress)
 }
 
-func (t *erc20Contract) tokenName(opts *bind.CallOpts) (string, error) {
+func (t *erc20Contract) TokenName(opts *bind.CallOpts) (string, error) {
 	return t.contract.Name(opts)
 }

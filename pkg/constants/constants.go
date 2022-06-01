@@ -8,4 +8,5 @@ const (
 	NetworkTypePolkadot = "polkadot"
 	IPFSPrefix          = "ipfs://"
 	IPFSURLPrefix       = "https://ipfs.io/ipfs"
+	UNKNOWN             = "unknown"
 )

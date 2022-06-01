@@ -6,6 +6,7 @@ require (
 	github.com/eclipse/paho.mqtt.golang v1.3.5
 	github.com/ethereum/go-ethereum v1.10.13
 	github.com/go-chi/chi/v5 v5.0.0
+	github.com/go-chi/render v1.0.1
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/instana/testify v1.6.2-0.20200721153833-94b1851f4d65
 	github.com/ory/x v0.0.332

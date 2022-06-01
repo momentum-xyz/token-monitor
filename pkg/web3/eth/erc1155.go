@@ -22,7 +22,7 @@ type erc1155Contract struct {
 	metadata *abigen.ERC1155MetadataURI
 }
 
-func newERC1155Contract(addressHex string, tokenID *big.Int, client bind.ContractBackend) (*erc1155Contract, error) {
+func NewERC1155Contract(addressHex string, tokenID *big.Int, client bind.ContractBackend) (*erc1155Contract, error) {
 	contractAddress, err := HexToAddress(addressHex)
 	if err != nil {
 		return nil, err
@@ -41,16 +41,16 @@ func newERC1155Contract(addressHex string, tokenID *big.Int, client bind.Contrac
 	}, nil
 }
 
-func (t *erc1155Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.Address) ([]logItem, error) {
-	res := make([]logItem, 0)
+func (t *erc1155Contract) GetLogs(opts *bind.FilterOpts, userAddresses []common.Address) ([]types.LogItem, error) {
+	res := make([]types.LogItem, 0)
 	senderLogs, err := t.contract.FilterTransferSingle(opts, nil, userAddresses, nil)
 	if err != nil {
 		return nil, err
 	}
 	for senderLogs.Next() {
-		res = append(res, logItem{
-			user:  senderLogs.Event.From,
-			value: new(big.Int).Neg(senderLogs.Event.Value),
+		res = append(res, types.LogItem{
+			User:  senderLogs.Event.From,
+			Value: new(big.Int).Neg(senderLogs.Event.Value),
 		})
 	}
 	receiverLogs, err := t.contract.FilterTransferSingle(opts, nil, nil, userAddresses)
@@ -58,9 +58,9 @@ func (t *erc1155Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.
 		return nil, err
 	}
 	for receiverLogs.Next() {
-		res = append(res, logItem{
-			user:  receiverLogs.Event.To,
-			value: receiverLogs.Event.Value,
+		res = append(res, types.LogItem{
+			User:  receiverLogs.Event.To,
+			Value: receiverLogs.Event.Value,
 		})
 	}
 
@@ -71,9 +71,9 @@ func (t *erc1155Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.
 	for senderBatchLogs.Next() {
 		for i, id := range senderBatchLogs.Event.Ids {
 			if id.Cmp(t.tokenID) == 0 {
-				res = append(res, logItem{
-					user:  senderBatchLogs.Event.From,
-					value: new(big.Int).Neg(senderBatchLogs.Event.Values[i]),
+				res = append(res, types.LogItem{
+					User:  senderBatchLogs.Event.From,
+					Value: new(big.Int).Neg(senderBatchLogs.Event.Values[i]),
 				})
 			}
 		}
@@ -85,9 +85,9 @@ func (t *erc1155Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.
 	for receiverBatchLogs.Next() {
 		for i, id := range receiverBatchLogs.Event.Ids {
 			if id.Cmp(t.tokenID) == 0 {
-				res = append(res, logItem{
-					user:  receiverBatchLogs.Event.From,
-					value: receiverBatchLogs.Event.Values[i],
+				res = append(res, types.LogItem{
+					User:  receiverBatchLogs.Event.From,
+					Value: receiverBatchLogs.Event.Values[i],
 				})
 			}
 		}
@@ -95,11 +95,11 @@ func (t *erc1155Contract) getLogs(opts *bind.FilterOpts, userAddresses []common.
 	return res, nil
 }
 
-func (t *erc1155Contract) balanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error) {
+func (t *erc1155Contract) BalanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error) {
 	return t.contract.BalanceOf(opts, userAddress, t.tokenID)
 }
 
-func (t *erc1155Contract) tokenName(opts *bind.CallOpts) (string, error) {
+func (t *erc1155Contract) TokenName(opts *bind.CallOpts) (string, error) {
 	uri, err := t.metadata.Uri(opts, t.tokenID)
 	if err != nil {
 		return "", err

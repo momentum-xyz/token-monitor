@@ -5,6 +5,8 @@ import (
 	"github.com/OdysseyMomentumExperience/token-service/pkg/bbolt"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/redis"
+	"github.com/OdysseyMomentumExperience/token-service/pkg/server"
+	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
 	"github.com/pkg/errors"
 
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
@@ -21,15 +23,21 @@ type MetricsServer interface {
 	Start(ctx context.Context)
 }
 
+type APIServer interface {
+	Start(ctx context.Context)
+}
+
 type TokenService struct {
 	RuleBroker    RuleBroker
 	MetricsServer MetricsServer
+	APIServer     APIServer
 }
 
-func NewTokenService(ruleBroker RuleBroker, metricsServer MetricsServer) *TokenService {
+func NewTokenService(ruleBroker RuleBroker, metricsServer MetricsServer, apiServer APIServer) *TokenService {
 	return &TokenService{
 		RuleBroker:    ruleBroker,
 		MetricsServer: metricsServer,
+		APIServer:     apiServer,
 	}
 }
 
@@ -69,7 +77,7 @@ func NewMQTTTokenService(cfg *Config) (*TokenService, func(), error) {
 
 	ruleStatePublisher := mqtt.NewRuleStatePublisher(mqttClient)
 	ruleManager := web3.NewRuleManager(networkManager, ruleStatePublisher, c)
-	server, err := mqtt.NewRuleBroker(mqttClient, ruleManager, cfg.MQTT)
+	mqttServer, err := mqtt.NewRuleBroker(mqttClient, ruleManager, cfg.MQTT)
 	if err != nil {
 		cleanup.do()
 		return nil, nil, err
@@ -77,12 +85,17 @@ func NewMQTTTokenService(cfg *Config) (*TokenService, func(), error) {
 
 	metricsServer := NewPrometheusServer()
 
-	return NewTokenService(server, metricsServer), cleanup.do, nil
+	tokenNameService := eth.NewEthNameService(networkManager)
+	tokenNameHandler := server.NewTokenNameHandler(tokenNameService)
+	apiServer := server.NewServer(tokenNameHandler)
+
+	return NewTokenService(mqttServer, metricsServer, apiServer), cleanup.do, nil
 }
 
 func (svc *TokenService) Start(ctx context.Context) error {
 	svc.MetricsServer.Start(ctx)
 	svc.RuleBroker.Start(ctx)
+	svc.APIServer.Start(ctx)
 
 	return nil
 }
