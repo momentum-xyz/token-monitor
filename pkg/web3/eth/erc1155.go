@@ -36,6 +36,7 @@ func NewERC1155Contract(addressHex string, tokenID *big.Int, client bind.Contrac
 		return nil, errors.Wrapf(err, "failed to create erc1155 metadata contract for %s", contractAddress.String())
 	}
 	return &erc1155Contract{
+		tokenID:  tokenID,
 		contract: contract,
 		metadata: metadata,
 	}, nil
@@ -101,16 +102,32 @@ func (t *erc1155Contract) BalanceOf(opts *bind.CallOpts, userAddress common.Addr
 
 func (t *erc1155Contract) TokenName(opts *bind.CallOpts) (string, error) {
 	uri, err := t.metadata.Uri(opts, t.tokenID)
+
 	if err != nil {
 		return "", err
 	}
-	uri = strings.ReplaceAll(uri, constants.IPFSPrefix, "")
-	resp, err := http.Get(fmt.Sprintf("%s/%s", constants.IPFSURLPrefix, uri))
+
+	resp, err := http.Get(fmt.Sprintf("%s/%s/%s", constants.IPFSURLPrefix, parseMetadataURI(uri), t.tokenID))
+	if err != nil {
+		return "", err
+	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
 	var result types.ERC1155MetaData
 	if err := json.Unmarshal(body, &result); err != nil {
 		return "", err
 	}
 	return result.Name, nil
+}
+
+func parseMetadataURI(uri string) string {
+	uri = strings.ReplaceAll(uri, constants.IPFSPrefix, "")
+	i := strings.IndexByte(uri, '/')
+	if i != -1 {
+		uri = uri[:i]
+	}
+	return uri
 }
