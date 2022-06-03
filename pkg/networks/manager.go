@@ -6,9 +6,9 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/momentum-xyz/token-monitor/pkg/constants"
 	"github.com/ory/x/errorsx"
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"

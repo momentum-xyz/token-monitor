@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 	"math"
 	"math/big"
 )

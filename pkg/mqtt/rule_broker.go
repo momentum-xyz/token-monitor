@@ -3,9 +3,9 @@ package mqtt
 import (
 	"context"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/web3"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/web3"
 	"github.com/ory/x/errorsx"
 )
 

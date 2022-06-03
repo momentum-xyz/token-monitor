@@ -2,13 +2,13 @@ package eth
 
 import (
 	"context"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
+	"github.com/momentum-xyz/token-monitor/pkg/cache"
 	"math/big"
 	"time"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 )
 
 func manageActiveUsers(ctx context.Context, id int, c cache.Cache, contract contract, notify BalanceNotifierFunc, client Client, lastCheckedBlock uint64, userCh chan common.Address, blockCh chan uint64) {

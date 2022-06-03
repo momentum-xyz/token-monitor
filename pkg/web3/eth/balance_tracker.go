@@ -3,15 +3,15 @@ package eth
 import (
 	"context"
 	"fmt"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
+	"github.com/momentum-xyz/token-monitor/pkg/cache"
 	"math/big"
 	"time"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/redis"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/momentum-xyz/token-monitor/pkg/constants"
+	"github.com/momentum-xyz/token-monitor/pkg/redis"
 	"github.com/pkg/errors"
 )
 

@@ -3,11 +3,11 @@ package main
 import (
 	"math/big"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/abigen"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/momentum-xyz/token-monitor/pkg/abigen"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 )
 
 const infuraURL = "https://goerli.infura.io/v3/a6bd0a4b91074054a7d17e27d85d9fac"
