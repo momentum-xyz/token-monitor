@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-const infuraURL = "https://mainnet.infura.io/v3/a6bd0a4b91074054a7d17e27d85d9fac"
+const infuraURL = "https://mainnet.infura.io/v3/my-rpc"
 const contractAddr = "0xA6A5eC7b1B8A34Ff2dcb2926b7c78f52A5ce3b90"
 const tokenID = 1724
 

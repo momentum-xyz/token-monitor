@@ -34,7 +34,7 @@ func Error(w http.ResponseWriter, err error, code int) bool {
 	}
 
 	if err != nil {
-		panic(err) // If this happens, it's a programmer mistake so we panic
+		log.Logln(0, err) // If this happens, it's a programmer mistake
 	}
 
 	return true
