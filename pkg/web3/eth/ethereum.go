@@ -20,7 +20,7 @@ type Client interface {
 
 func HexToAddress(address string) (common.Address, error) {
 	if !common.IsHexAddress(address) {
-		return common.Address{}, errors.Errorf("Invalid user address: %s", address)
+		return common.Address{}, errors.Errorf("Invalid address: %s", address)
 	}
 
 	return common.HexToAddress(address), nil

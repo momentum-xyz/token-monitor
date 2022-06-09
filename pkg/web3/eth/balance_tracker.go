@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
+	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
 	"math/big"
 	"time"
 
 	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/redis"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/pkg/errors"
@@ -21,7 +21,7 @@ type BalanceTracker struct {
 	cancel        context.CancelFunc
 	client        *ethclient.Client
 	notify        BalanceNotifierFunc
-	contract      contract
+	contract      types.Contract
 	pendingUserCh chan common.Address
 }
 
@@ -31,16 +31,16 @@ type Cache interface {
 type BalanceNotifierFunc func(id int, user string, balance *big.Int)
 
 func StartNewBalanceTracker(ctx context.Context, id int, tokenType string, tokenID *big.Int, client *ethclient.Client, contractAddressHex string, users []string, cache cache.Cache, notify BalanceNotifierFunc) (*BalanceTracker, error) {
-	var contract contract
+	var contract types.Contract
 	var err error
 
 	switch tokenType {
 	case constants.TokenTypeERC20:
-		contract, err = newERC20Contract(contractAddressHex, client)
+		contract, err = NewERC20Contract(contractAddressHex, client)
 	case constants.TokenTypeERC721:
-		contract, err = newERC721Contract(contractAddressHex, client)
+		contract, err = NewERC721Contract(contractAddressHex, client)
 	case constants.TokenTypeERC1155:
-		contract, err = newERC1155Contract(contractAddressHex, tokenID, client)
+		contract, err = NewERC1155Contract(contractAddressHex, tokenID, client)
 	default:
 		return nil, errors.Errorf("unsupported token type %s", tokenType)
 	}
@@ -65,12 +65,7 @@ func StartNewBalanceTracker(ctx context.Context, id int, tokenType string, token
 	return l, nil
 }
 
-type contract interface {
-	getLogs(opts *bind.FilterOpts, userAddresses []common.Address) ([]logItem, error)
-	balanceOf(opts *bind.CallOpts, userAddress common.Address) (*big.Int, error)
-}
-
-func initialize(ctx context.Context, id int, client *ethclient.Client, users []string, pendingUserCh chan common.Address, c cache.Cache, contract contract, notify BalanceNotifierFunc) {
+func initialize(ctx context.Context, id int, client *ethclient.Client, users []string, pendingUserCh chan common.Address, c cache.Cache, contract types.Contract, notify BalanceNotifierFunc) {
 	// init:
 	// get latest block number
 	// for each user:

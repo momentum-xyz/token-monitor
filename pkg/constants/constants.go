@@ -6,4 +6,7 @@ const (
 	TokenTypeERC1155    = "erc1155"
 	NetworkTypeEthereum = "ethereum"
 	NetworkTypePolkadot = "polkadot"
+	IPFSPrefix          = "ipfs://"
+	IPFSURLPrefix       = "https://ipfs.io/ipfs"
+	UNKNOWN             = "unknown"
 )

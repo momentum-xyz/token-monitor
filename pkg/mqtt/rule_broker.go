@@ -87,18 +87,19 @@ func (p *RuleBroker) start(ctx context.Context) {
 
 func (p *RuleBroker) initializeRuleManager(ctx context.Context) error {
 	log.Logln(0, "rule broker -", "waiting for initial rules and users")
-	rules, err := web3.UnmarshalRuleDefinitions(<-p.activeRulesChannel)
-	if err != nil {
-		return errorsx.WithStack(err)
-	}
-	log.Logln(0, "rule broker -", "rules list created")
-
+	
 	//TODO: refactor structure of message for users coming from backend service - for discussion
 	users, err := web3.UnmarshalUsers(<-p.activeUsersChannel)
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
 	log.Logln(0, "rule broker -", "users list created")
+
+	rules, err := web3.UnmarshalRuleDefinitions(<-p.activeRulesChannel)
+	if err != nil {
+		return errorsx.WithStack(err)
+	}
+	log.Logln(0, "rule broker -", "rules list created")
 
 	return p.ruleManager.Init(ctx, rules, users)
 }

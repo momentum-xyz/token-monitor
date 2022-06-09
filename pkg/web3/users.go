@@ -2,7 +2,6 @@ package web3
 
 import (
 	"encoding/json"
-
 	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
 	"github.com/ory/x/errorsx"
 )
