@@ -3,7 +3,7 @@ package eth
 import (
 	"context"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
-	"math/big"
+	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
 	"time"
 
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
@@ -11,7 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func manageActiveUsers(ctx context.Context, id int, c cache.Cache, contract contract, notify BalanceNotifierFunc, client Client, lastCheckedBlock uint64, userCh chan common.Address, blockCh chan uint64) {
+func manageActiveUsers(ctx context.Context, id int, c cache.Cache, contract types.Contract, notify BalanceNotifierFunc, client Client, lastCheckedBlock uint64, userCh chan common.Address, blockCh chan uint64) {
 	ticker := time.NewTicker(time.Second * 3)
 
 	activeUsers := make([]common.Address, 0)
@@ -46,7 +46,7 @@ func manageActiveUsers(ctx context.Context, id int, c cache.Cache, contract cont
 	}
 }
 
-func handleNetworkPoll(ctx context.Context, id int, c cache.Cache, contract contract, notify BalanceNotifierFunc, lastCheckedBlock uint64, latestBlock uint64, client Client, activeUsers []common.Address) (uint64, error) {
+func handleNetworkPoll(ctx context.Context, id int, c cache.Cache, contract types.Contract, notify BalanceNotifierFunc, lastCheckedBlock uint64, latestBlock uint64, client Client, activeUsers []common.Address) (uint64, error) {
 	var err error
 	var fromBlock uint64
 
@@ -67,15 +67,10 @@ func handleNetworkPoll(ctx context.Context, id int, c cache.Cache, contract cont
 	return toBlock, nil
 }
 
-type logItem struct {
-	user  common.Address
-	value *big.Int
-}
-
-func processLogs(ctx context.Context, id int, c cache.Cache, contract contract, notify BalanceNotifierFunc, fromBlock uint64, toBlock uint64, userAddresses []common.Address) error {
+func processLogs(ctx context.Context, id int, c cache.Cache, contract types.Contract, notify BalanceNotifierFunc, fromBlock uint64, toBlock uint64, userAddresses []common.Address) error {
 	balances := make(map[string]*cache.UserBalance)
 
-	logs, err := contract.getLogs(
+	logs, err := contract.GetLogs(
 		&bind.FilterOpts{
 			Start: fromBlock,
 			End:   &toBlock,
@@ -87,9 +82,9 @@ func processLogs(ctx context.Context, id int, c cache.Cache, contract contract, 
 		return err
 	}
 	for _, logItem := range logs {
-		old := balances[logItem.user.String()]
-		balances[logItem.user.String()] = &cache.UserBalance{
-			Balance: old.Balance.Add(old.Balance, logItem.value),
+		old := balances[logItem.User.String()]
+		balances[logItem.User.String()] = &cache.UserBalance{
+			Balance: old.Balance.Add(old.Balance, logItem.Value),
 		}
 	}
 	updatedBalances, err := c.UpdateRuleTokenBalances(ctx, &cache.TokenBalances{
