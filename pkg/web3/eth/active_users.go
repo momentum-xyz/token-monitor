@@ -99,9 +99,12 @@ func processLogs(ctx context.Context, id int, c cache.Cache, contract types.Cont
 				BlockNumber: 0,
 			}
 		}
-		balances[logItem.User.String()] = &cache.UserBalance{
-			BlockNumber: toBlock,
-			Balance:     old.Balance.Add(old.Balance, logItem.Value),
+		// if the cache contains a newer balance, don't update it
+		if old.BlockNumber == 0 || toBlock > old.BlockNumber {
+			balances[logItem.User.String()] = &cache.UserBalance{
+				Balance:     old.Balance.Add(old.Balance, logItem.Value),
+				BlockNumber: toBlock,
+			}
 		}
 	}
 	updatedBalances, err := c.UpdateRuleTokenBalances(ctx, &cache.TokenBalances{

@@ -8,7 +8,6 @@ import (
 	"github.com/ory/x/errorsx"
 	"github.com/vmihailenco/msgpack/v5"
 	bolt "go.etcd.io/bbolt"
-	"math/big"
 	"os"
 )
 
@@ -82,50 +81,13 @@ func (c *Cache) UpdateRuleTokenBalances(ctx context.Context, tb *cache.TokenBala
 }
 
 func (c *Cache) updateRuleTokenBalances(ctx context.Context, key []byte, tb *cache.TokenBalances) (*cache.TokenBalances, error) {
-	totals, err := c.getRuleTokenBalance(ctx, key)
-	if err != nil {
-		return nil, err
-	}
 
-	res := &cache.TokenBalances{
-		RuleID:      tb.RuleID,
-		BlockNumber: tb.BlockNumber,
-		Balances:    make(map[string]*cache.UserBalance),
-	}
-
-	for user, newUserBalance := range tb.Balances {
-		oldUserBalance := totals[user]
-		if oldUserBalance == nil {
-			oldUserBalance = &cache.UserBalance{
-				Balance:     big.NewInt(0),
-				BlockNumber: 0,
-			}
-		}
-		// if the cache contains a newer balance, don't update it
-		if newUserBalance.BlockNumber == 0 || newUserBalance.BlockNumber > oldUserBalance.BlockNumber {
-			totals[user] = &cache.UserBalance{
-				Balance:     new(big.Int).Set(newUserBalance.Balance),
-				BlockNumber: newUserBalance.BlockNumber,
-			}
-			res.Balances[user] = &cache.UserBalance{
-				Balance:     new(big.Int).Set(newUserBalance.Balance),
-				BlockNumber: newUserBalance.BlockNumber,
-			}
-		}
-	}
-
-	totalsTb := &cache.TokenBalances{
-		Balances:    totals,
-		BlockNumber: tb.BlockNumber,
-		RuleID:      tb.RuleID,
-	}
-	res.BlockNumber = tb.BlockNumber
-	err = c.set(ctx, key, totalsTb)
+	err := c.set(ctx, key, tb)
 	if err != nil {
 		return nil, errorsx.WithStack(err)
 	}
 
-	return res, nil
+	return tb, nil
 }
 
 func (c *Cache) GetRuleTokenBalance(ctx context.Context, id int) (map[string]*cache.UserBalance, error) {
