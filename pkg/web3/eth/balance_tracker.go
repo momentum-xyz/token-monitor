@@ -2,7 +2,6 @@ package eth
 
 import (
 	"context"
-	"fmt"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
@@ -106,7 +105,6 @@ func initialize(ctx context.Context, id int, client *ethclient.Client, users []s
 	}
 
 	blockNumber := <-blockCh
-	fmt.Println(blockNumber)
 	go managePendingUsers(ctx, id, client, c, contract, notify, blockCh, pendingUserCh, activeUserCh)
 	go manageActiveUsers(ctx, id, c, contract, notify, client, blockNumber, activeUserCh, blockCh)
 }

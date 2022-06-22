@@ -47,6 +47,8 @@ func handlePendingUsers(ctx context.Context, id int, c cache.Cache, blockNumber 
 	failed := make(map[string]bool, len(users))
 	remainingUsers := make([]common.Address, 0)
 
+	lock := sync.RWMutex{}
+
 	for _, user := range users {
 		balances[user.String()] = &cache.UserBalance{
 			Balance: big.NewInt(0),
@@ -70,11 +72,13 @@ func handlePendingUsers(ctx context.Context, id int, c cache.Cache, blockNumber 
 				return
 			}
 
-			// Map of a fixed size where each go routine is writing to a different key is thread safe I think?
+			// Map of a fixed size where each go routine is writing to a different key is thread safe I think? No, added Mutex
+			lock.Lock()
 			balances[user.String()] = &cache.UserBalance{
 				Balance:     b,
 				BlockNumber: blockNumber,
 			}
+			lock.Unlock()
 		}()
 	}
 
