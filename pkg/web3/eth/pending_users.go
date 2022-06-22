@@ -34,7 +34,7 @@ func managePendingUsers(ctx context.Context, id int, client *ethclient.Client, c
 		case user := <-pendingCh:
 			users = append(users, user)
 		case <-ticker.C:
-			if len(users) > 0 {
+			if len(users) > 0 && nextBlock > 0 {
 				users, err = handlePendingUsers(ctx, id, c, nextBlock, contract, notify, activeCh, users...)
 				log.Error(err)
 			}

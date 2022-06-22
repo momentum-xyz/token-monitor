@@ -103,13 +103,12 @@ func (c *Cache) updateRuleTokenBalances(ctx context.Context, key []byte, tb *cac
 		}
 		// if the cache contains a newer balance, don't update it
 		if newUserBalance.BlockNumber == 0 || newUserBalance.BlockNumber > oldUserBalance.BlockNumber {
-			newBalance := new(big.Int).Add(oldUserBalance.Balance, newUserBalance.Balance)
 			totals[user] = &cache.UserBalance{
-				Balance:     new(big.Int).Set(newBalance),
+				Balance:     new(big.Int).Set(newUserBalance.Balance),
 				BlockNumber: newUserBalance.BlockNumber,
 			}
 			res.Balances[user] = &cache.UserBalance{
-				Balance:     new(big.Int).Set(newBalance),
+				Balance:     new(big.Int).Set(newUserBalance.Balance),
 				BlockNumber: newUserBalance.BlockNumber,
 			}
 		}
@@ -158,7 +157,7 @@ func (c *Cache) set(ctx context.Context, key []byte, v interface{}) error {
 		return errorsx.WithStack(err)
 	}
 	c.client.Update(func(tx *bolt.Tx) error {
-		b, err := tx.CreateBucketIfNotExists([]byte(c.config.BBolt.BucketName))
+		b := tx.Bucket([]byte(c.config.BBolt.BucketName))
 		if err != nil {
 			return err
 		}
@@ -174,21 +173,20 @@ func (c *Cache) set(ctx context.Context, key []byte, v interface{}) error {
 
 func (c *Cache) get(ctx context.Context, key []byte, v interface{}) error {
 	var data []byte
-	err := c.client.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte(c.config.BBolt.BucketName))
-		if b == nil {
-			return errors.New(fmt.Sprintf("No result for bucket: %s", string(c.config.BBolt.BucketName)))
+	err := c.client.Update(func(tx *bolt.Tx) error {
+		b, err := tx.CreateBucketIfNotExists([]byte(c.config.BBolt.BucketName))
+		if err != nil {
+			return errors.New(fmt.Sprintf("Error fetching bucket: %s", err))
 		}
 		data = b.Get(key)
-		if data == nil {
-			return errors.New(fmt.Sprintf("No result for key: %s", string(key)))
-		}
+
 		return nil
 	})
+
 	if err != nil {
 		return err
 	}
-	if len(data) == 0 {
+	if data == nil || len(data) == 0 {
 		return nil
 	}
 	err = msgpack.Unmarshal(data, v)
