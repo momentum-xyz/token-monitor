@@ -34,7 +34,7 @@ func managePendingUsers(ctx context.Context, id int, client *ethclient.Client, c
 		case user := <-pendingCh:
 			users = append(users, user)
 		case <-ticker.C:
-			if len(users) > 0 {
+			if len(users) > 0 && nextBlock > 0 {
 				users, err = handlePendingUsers(ctx, id, c, nextBlock, contract, notify, activeCh, users...)
 				log.Error(err)
 			}
@@ -46,6 +46,8 @@ func handlePendingUsers(ctx context.Context, id int, c cache.Cache, blockNumber 
 	balances := make(map[string]*cache.UserBalance, len(users))
 	failed := make(map[string]bool, len(users))
 	remainingUsers := make([]common.Address, 0)
+
+	lock := sync.RWMutex{}
 
 	for _, user := range users {
 		balances[user.String()] = &cache.UserBalance{
@@ -70,11 +72,14 @@ func handlePendingUsers(ctx context.Context, id int, c cache.Cache, blockNumber 
 				return
 			}
 
-			// Map of a fixed size where each go routine is writing to a different key is thread safe I think?
+			// Map of a fixed size where each go routine is writing to a different key is thread safe I think? No, added Mutex
+			// TODO: instead of mutex, consider using generics with SyncMap for this map and the failed map
+			lock.Lock()
 			balances[user.String()] = &cache.UserBalance{
 				Balance:     b,
 				BlockNumber: blockNumber,
 			}
+			lock.Unlock()
 		}()
 	}
 

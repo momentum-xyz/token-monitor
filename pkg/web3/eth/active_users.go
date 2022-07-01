@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
+	"math/big"
 	"time"
 
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
@@ -77,14 +78,33 @@ func processLogs(ctx context.Context, id int, c cache.Cache, contract types.Cont
 		}, userAddresses,
 	)
 
+	if len(logs) == 0 {
+		return nil
+	}
+
+	originalBalances, err := c.GetRuleTokenBalance(ctx, id)
+	if err != nil {
+		return err
+	}
+
 	log.Logln(0, "rule:", id, "-", len(logs), "logs found from block:", fromBlock, "to:", toBlock)
 	if err != nil {
 		return err
 	}
 	for _, logItem := range logs {
-		old := balances[logItem.User.String()]
-		balances[logItem.User.String()] = &cache.UserBalance{
-			Balance: old.Balance.Add(old.Balance, logItem.Value),
+		old := originalBalances[logItem.User.String()]
+		if old == nil {
+			old = &cache.UserBalance{
+				Balance:     big.NewInt(0),
+				BlockNumber: 0,
+			}
+		}
+		// if the cache contains a newer balance, don't update it
+		if old.BlockNumber == 0 || toBlock > old.BlockNumber {
+			balances[logItem.User.String()] = &cache.UserBalance{
+				Balance:     old.Balance.Add(old.Balance, logItem.Value),
+				BlockNumber: toBlock,
+			}
 		}
 	}
 	updatedBalances, err := c.UpdateRuleTokenBalances(ctx, &cache.TokenBalances{

@@ -153,3 +153,5 @@ dataSources.xml
 Project_Default.xml
 
 pkg/bbolt/test.db
+
+dev.db
