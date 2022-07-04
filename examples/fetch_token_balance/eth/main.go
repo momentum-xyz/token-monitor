@@ -9,7 +9,7 @@ import (
 	"math/big"
 )
 
-const infuraURL = "https://mainnet.infura.io/v3/a6bd0a4b91074054a7d17e27d85d9fac"
+const infuraURL = "https://mainnet.infura.io/v3/my-rpc"
 const ethAddr = "0x1833be080776553f7c3f83ec9cde2ac216cd5ab9"
 
 func main() {

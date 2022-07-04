@@ -13,7 +13,7 @@ import (
 	"github.com/momentum-xyz/token-monitor/pkg/log"
 )
 
-const infuraURL = "https://ropsten.infura.io/v3/a6bd0a4b91074054a7d17e27d85d9fac"
+const infuraURL = "https://mainnet.infura.io/v3/my-rpc"
 
 // const contractAddr = "0x655f2166b0709cd575202630952d71e2bb0d61af"
 // const userAddr = "0x501e71ec141e031d804c48fbfc1c0a5b020c827f"
