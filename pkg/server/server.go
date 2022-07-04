@@ -2,9 +2,9 @@ package server
 
 import (
 	"context"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 	"github.com/ory/x/errorsx"
 	"net/http"
 )

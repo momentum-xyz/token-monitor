@@ -3,7 +3,7 @@ FROM golang:1.17.3-alpine as build
 COPY . /usr/src/code
 WORKDIR /usr/src/code
 RUN apk add build-base
-RUN go build ./cmd/token_service/...
+RUN go build ./cmd/token-monitor/...
 
 FROM alpine:latest as production-build
 

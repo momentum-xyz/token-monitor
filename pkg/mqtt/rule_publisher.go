@@ -3,8 +3,8 @@ package mqtt
 import (
 	"fmt"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 	"github.com/pkg/errors"
 )
 

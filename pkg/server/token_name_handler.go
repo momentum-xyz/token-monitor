@@ -1,12 +1,12 @@
 package server
 
 import (
-	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/xhttp"
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
+	"github.com/momentum-xyz/token-monitor/pkg/constants"
+	"github.com/momentum-xyz/token-monitor/pkg/types"
+	"github.com/momentum-xyz/token-monitor/pkg/web3/eth"
+	"github.com/momentum-xyz/token-monitor/pkg/xhttp"
 	"github.com/pkg/errors"
 	"net/http"
 )

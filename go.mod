@@ -1,4 +1,4 @@
-module github.com/OdysseyMomentumExperience/token-service
+module github.com/momentum-xyz/token-monitor
 
 go 1.17
 

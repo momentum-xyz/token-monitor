@@ -3,13 +3,13 @@ package web3
 import (
 	"context"
 	"errors"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
+	"github.com/momentum-xyz/token-monitor/pkg/cache"
 	"math/big"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/networks"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
+	"github.com/momentum-xyz/token-monitor/pkg/constants"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/networks"
+	"github.com/momentum-xyz/token-monitor/pkg/web3/eth"
 )
 
 type TokenTracker interface {

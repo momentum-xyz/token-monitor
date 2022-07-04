@@ -2,16 +2,16 @@ package eth
 
 import (
 	"context"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
+	"github.com/momentum-xyz/token-monitor/pkg/cache"
+	"github.com/momentum-xyz/token-monitor/pkg/types"
 	"math/big"
 	"sync"
 	"time"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 )
 
 func managePendingUsers(ctx context.Context, id int, client *ethclient.Client, c cache.Cache, contract types.Contract, notify BalanceNotifierFunc, blockCh <-chan uint64, pendingCh <-chan common.Address, activeCh chan<- common.Address) {
