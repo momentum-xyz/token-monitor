@@ -6,8 +6,8 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/tokensvc"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/tokensvc"
 	"github.com/prometheus/common/expfmt"
 )
 
@@ -22,7 +22,7 @@ func main() {
 }
 
 func start() error {
-	configPath, ok := os.LookupEnv("CONFIG_PATH")	
+	configPath, ok := os.LookupEnv("CONFIG_PATH")
 	if !ok {
 		configPath = configFileName
 	}

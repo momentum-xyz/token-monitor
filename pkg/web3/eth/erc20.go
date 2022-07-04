@@ -1,12 +1,12 @@
 package eth
 
 import (
-	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
+	"github.com/momentum-xyz/token-monitor/pkg/types"
 	"math/big"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/abigen"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/momentum-xyz/token-monitor/pkg/abigen"
 	"github.com/pkg/errors"
 )
 

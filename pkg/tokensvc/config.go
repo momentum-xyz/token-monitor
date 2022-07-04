@@ -2,13 +2,13 @@ package tokensvc
 
 import (
 	"fmt"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
+	"github.com/momentum-xyz/token-monitor/pkg/cache"
 	"io"
 	"os"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/mqtt"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/networks"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/mqtt"
+	"github.com/momentum-xyz/token-monitor/pkg/networks"
 	"gopkg.in/yaml.v2"
 )
 

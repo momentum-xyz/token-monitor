@@ -2,7 +2,7 @@ package xhttp
 
 import (
 	"encoding/json"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 	"net/http"
 	"strconv"
 )

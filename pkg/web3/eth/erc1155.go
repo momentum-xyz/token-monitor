@@ -3,16 +3,16 @@ package eth
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
+	"github.com/momentum-xyz/token-monitor/pkg/constants"
+	"github.com/momentum-xyz/token-monitor/pkg/types"
 	"io/ioutil"
 	"math/big"
 	"net/http"
 	"strings"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/abigen"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/momentum-xyz/token-monitor/pkg/abigen"
 	"github.com/pkg/errors"
 )
 

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 	"github.com/pkg/errors"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"

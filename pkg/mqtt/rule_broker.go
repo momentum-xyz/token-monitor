@@ -3,9 +3,9 @@ package mqtt
 import (
 	"context"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/web3"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/web3"
 	"github.com/ory/x/errorsx"
 )
 
@@ -87,7 +87,7 @@ func (p *RuleBroker) start(ctx context.Context) {
 
 func (p *RuleBroker) initializeRuleManager(ctx context.Context) error {
 	log.Logln(0, "rule broker -", "waiting for initial rules and users")
-	
+
 	//TODO: refactor structure of message for users coming from backend service - for discussion
 	users, err := web3.UnmarshalUsers(<-p.activeUsersChannel)
 	if err != nil {

@@ -2,17 +2,17 @@ package tokensvc
 
 import (
 	"context"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/bbolt"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/redis"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/server"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
+	"github.com/momentum-xyz/token-monitor/pkg/bbolt"
+	"github.com/momentum-xyz/token-monitor/pkg/cache"
+	"github.com/momentum-xyz/token-monitor/pkg/redis"
+	"github.com/momentum-xyz/token-monitor/pkg/server"
+	"github.com/momentum-xyz/token-monitor/pkg/web3/eth"
 	"github.com/pkg/errors"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/mqtt"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/networks"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/web3"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/mqtt"
+	"github.com/momentum-xyz/token-monitor/pkg/networks"
+	"github.com/momentum-xyz/token-monitor/pkg/web3"
 )
 
 type RuleBroker interface {

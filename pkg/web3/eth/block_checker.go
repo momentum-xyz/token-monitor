@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 	"github.com/pkg/errors"
 )
 

@@ -2,7 +2,7 @@ package bbolt
 
 import (
 	"context"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
+	"github.com/momentum-xyz/token-monitor/pkg/cache"
 	"math/big"
 	"math/rand"
 	"testing"

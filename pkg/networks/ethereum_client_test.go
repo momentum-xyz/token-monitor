@@ -9,11 +9,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/abigen"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/networks"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/instana/testify/require"
+	"github.com/momentum-xyz/token-monitor/pkg/abigen"
+	"github.com/momentum-xyz/token-monitor/pkg/networks"
 )
 
 const infuraURL = "https://ropsten.infura.io/v3/a6bd0a4b91074054a7d17e27d85d9fac"

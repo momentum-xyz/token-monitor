@@ -1,9 +1,9 @@
 package eth
 
 import (
-	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/networks"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
+	"github.com/momentum-xyz/token-monitor/pkg/constants"
+	"github.com/momentum-xyz/token-monitor/pkg/networks"
+	"github.com/momentum-xyz/token-monitor/pkg/types"
 	"github.com/pkg/errors"
 )
 

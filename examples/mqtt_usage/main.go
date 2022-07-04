@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/mqtt"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/tokensvc"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
+	"github.com/momentum-xyz/token-monitor/pkg/mqtt"
+	"github.com/momentum-xyz/token-monitor/pkg/tokensvc"
 )
 
 const configFileName = "config.dev.yaml"

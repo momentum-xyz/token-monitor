@@ -8,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/go-chi/chi/v5"
+	"github.com/momentum-xyz/token-monitor/pkg/log"
 	"github.com/ory/x/errorsx"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
