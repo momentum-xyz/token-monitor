@@ -20,7 +20,7 @@ func startBlockChecker(ctx context.Context, id int, client *ethclient.Client, bl
 
 		select {
 		case <-ctx.Done():
-			log.Logln(0, "rule:", id, "-", "Stopping active user manager", ctx.Err())
+			log.Debug("rule:", id, "-", "Stopping active user manager", ctx.Err())
 			return
 		case <-ticker.C:
 			latestBlock, err = handleBlockPoll(ctx, id, client, latestBlock, blockCh...)
@@ -38,7 +38,7 @@ func handleBlockPoll(ctx context.Context, id int, client *ethclient.Client, late
 		return latestBlock, errors.Wrapf(err, "rule: %d - Error fetching latest block number", id)
 	}
 	if nextBlock == latestBlock {
-		log.Logln(0, "rule:", id, "-", "No new block")
+		log.Debug("rule:", id, "-", "No new block")
 		return latestBlock, nil
 	}
 

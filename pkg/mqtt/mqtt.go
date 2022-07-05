@@ -13,11 +13,11 @@ import (
 const mqttClientId = "token-service"
 
 var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
-	log.Logln(0, "Connected to MQTT broker")
+	log.Debug("Connected to MQTT broker")
 }
 
 var connectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
-	log.Logf(0, "Connection to MQTT broker lost: %v\n", err)
+	log.Errorf("Connection to MQTT broker lost: %v\n", err)
 	client.Connect()
 }
 

@@ -63,11 +63,11 @@ func (p *RuleBroker) Start(ctx context.Context) {
 }
 
 func (p *RuleBroker) start(ctx context.Context) {
-	log.Logln(0, "rule broker -", "starting rule broker...")
+	log.Debug("rule broker -", "starting rule broker...")
 
 	err := p.initializeRuleManager(ctx)
 	log.Error(err)
-	log.Logln(0, "rule broker -", "starting rule broker... done")
+	log.Debug("rule broker -", "starting rule broker... done")
 
 	for {
 		var err error
@@ -86,20 +86,20 @@ func (p *RuleBroker) start(ctx context.Context) {
 }
 
 func (p *RuleBroker) initializeRuleManager(ctx context.Context) error {
-	log.Logln(0, "rule broker -", "waiting for initial rules and users")
-	
+	log.Debug("rule broker -", "waiting for initial rules and users")
+
 	//TODO: refactor structure of message for users coming from backend service - for discussion
 	users, err := web3.UnmarshalUsers(<-p.activeUsersChannel)
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
-	log.Logln(0, "rule broker -", "users list created")
+	log.Debug("rule broker -", "users list created")
 
 	rules, err := web3.UnmarshalRuleDefinitions(<-p.activeRulesChannel)
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
-	log.Logln(0, "rule broker -", "rules list created")
+	log.Debug("rule broker -", "rules list created")
 
 	return p.ruleManager.Init(ctx, rules, users)
 }
@@ -109,10 +109,10 @@ func handleNewRule(ctx context.Context, ruleJSON []byte, manager *web3.RuleManag
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
-	log.Logln(0, "rule broker -", "received rule:", rule)
+	log.Debug("rule broker -", "received rule:", rule)
 
 	if !rule.Active {
-		log.Logln(0, "rule broker -", "deleting rule with id:", rule.ID)
+		log.Debug("rule broker -", "deleting rule with id:", rule.ID)
 
 		manager.DeleteRule(ctx, rule.ID)
 		return nil
@@ -130,7 +130,7 @@ func handleNewUser(ctx context.Context, userJSON []byte, ruleManager *web3.RuleM
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
-	log.Logln(0, "rule broker -", "new address received", user.EthereumAddress)
+	log.Debug("rule broker -", "new address received", user.EthereumAddress)
 
 	return ruleManager.AddUser(user)
 }

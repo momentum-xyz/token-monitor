@@ -15,15 +15,15 @@ const userAddr = "0x501E71EC141e031D804c48fBFC1C0a5b020C827F"
 func main() {
 	conn, err := ethclient.Dial(infuraURL)
 	if err != nil {
-		log.Logln(0, err)
+		log.Error(err)
 	}
 	defer conn.Close()
 
 	//ERC721
 	contract, err := abigen.NewERC721(common.HexToAddress(contractAddr), conn)
 	if err != nil {
-		log.Logln(0, "Fatal", err)
+		log.Error(err)
 	}
 	amt, _ := contract.BalanceOf(&bind.CallOpts{}, common.HexToAddress(userAddr))
-	log.Logln(0, "ERC 721 Balance:", amt)
+	log.Debug("ERC 721 Balance:", amt)
 }

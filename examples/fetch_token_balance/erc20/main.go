@@ -28,13 +28,13 @@ const userAddr = "0xa428d6424f9430b293eccc49fa71971b8a9d258d"
 func main() {
 	conn, err := ethclient.Dial(infuraURL)
 	if err != nil {
-		log.Logln(0, err)
+		log.Error(err)
 	}
 	defer conn.Close()
 	//ERC20
 	contract, err := abigen.NewERC20(common.HexToAddress(contractAddr), conn)
 	if err != nil {
-		log.Logln(0, "Fatal", err)
+		log.Error(err)
 	}
 
 	bn, err := conn.BlockNumber(context.Background())
@@ -52,5 +52,5 @@ func main() {
 	fBalance := new(big.Float)
 	fBalance.SetString(amt.String())
 	bal := new(big.Float).Quo(fBalance, big.NewFloat(math.Pow10(18)))
-	log.Logln(0, "ERC 20 Balance:", bal)
+	log.Debug("ERC 20 Balance:", bal)
 }

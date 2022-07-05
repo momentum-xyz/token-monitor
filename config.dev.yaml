@@ -1,5 +1,3 @@
-log:
-  level: 0
 mqtt:
   host: localhost
   port: 1883
@@ -16,6 +14,13 @@ cache:
     path: "dev.db"
     fileMode: 0600
     bucketName: "dev"
+sentry:
+  enable: true
+  dsn:
+  env:
+  release: token-monitor@1.0.0
+  debugEnable: true
+  attachStacktrace: true    
 
 network_manager:
   networks:
@@ -48,3 +53,4 @@ network_manager:
     #     - url: https://polkadot.infura.dummy
     #       rateLimit: 100
     #       batchSize: 1
+log_level: debug

@@ -11,14 +11,19 @@ import (
 const configFileName = "config.dev.yaml"
 
 func main() {
-	cfg := tokensvc.LoadConfig(configFileName)
+	cfg, err := tokensvc.LoadConfig(configFileName)
+
+	if err != nil {
+		panic(err)
+	}
+
 	cfg.PrettyPrint()
 
 	// token-service is a identifier for this client
 	mqttClient, err := mqtt.GetMQTTClient(cfg.MQTT)
 
 	if err != nil {
-		log.Logln(0, err)
+		log.Error(err)
 		os.Exit(0)
 	}
 	defer mqttClient.Disconnect(5)
@@ -30,13 +35,13 @@ func main() {
 	err = mqtt.Subscribe(mqttClient, subscriptionTopic, 1, commsFromOdyssey)
 
 	if err != nil {
-		log.Logln(0, err)
+		log.Error(err)
 	}
 
 	for {
 		select {
 		case msg := <-commsFromOdyssey:
-			log.Logln(0, msg)
+			log.Debug(msg)
 			continue
 		}
 	}

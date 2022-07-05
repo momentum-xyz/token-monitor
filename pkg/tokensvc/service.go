@@ -2,6 +2,7 @@ package tokensvc
 
 import (
 	"context"
+
 	"github.com/OdysseyMomentumExperience/token-service/pkg/bbolt"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/redis"
@@ -9,7 +10,6 @@ import (
 	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
 	"github.com/pkg/errors"
 
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/mqtt"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/networks"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/web3"
@@ -44,7 +44,7 @@ func NewTokenService(ruleBroker RuleBroker, metricsServer MetricsServer, apiServ
 func NewMQTTTokenService(cfg *Config) (*TokenService, func(), error) {
 	cleanup := newCleanup()
 
-	log.SetConfig(cfg.Log)
+	//log.SetConfig(cfg.Log)
 
 	var c cache.Cache
 	var err error
