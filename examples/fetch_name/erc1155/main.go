@@ -3,16 +3,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"math/big"
+	"net/http"
+	"strings"
+
 	"github.com/OdysseyMomentumExperience/token-service/pkg/abigen"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"io/ioutil"
-	"math/big"
-	"net/http"
-	"strings"
 )
 
 const infuraURL = "https://mainnet.infura.io/v3/my-rpc"
@@ -22,13 +23,13 @@ const tokenID = 1724
 func main() {
 	conn, err := ethclient.Dial(infuraURL)
 	if err != nil {
-		log.Logln(0, err)
+		log.Error(err)
 	}
 	defer conn.Close()
 
 	contract, err := abigen.NewERC1155MetadataURI(common.HexToAddress(contractAddr), conn)
 	if err != nil {
-		log.Logln(0, "Fatal", err)
+		log.Fatal(err)
 	}
 	uri, err := contract.Uri(&bind.CallOpts{}, big.NewInt(tokenID))
 	uri = strings.ReplaceAll(uri, "ipfs://", "")
@@ -40,5 +41,5 @@ func main() {
 	if err := json.Unmarshal(body, &result); err != nil { // Parse []byte to go struct pointer
 		fmt.Println("Can not unmarshal JSON")
 	}
-	log.Logln(0, result.Name)
+	log.Debug(result.Name)
 }

@@ -2,12 +2,13 @@ package eth
 
 import (
 	"context"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
 	"math/big"
 	"time"
 
+	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
+	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
+
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -19,13 +20,13 @@ func manageActiveUsers(ctx context.Context, id int, c cache.Cache, contract type
 	var latestBlock uint64
 
 	for {
-		log.Logln(0, "rule:", id, "-", "user list:", activeUsers)
+		log.Debug("rule:", id, "-", "user list:", activeUsers)
 
 		var err error
 
 		select {
 		case <-ctx.Done():
-			log.Logln(0, "rule:", id, "-", "Stopping active user manager", ctx.Err())
+			log.Debug("rule:", id, "-", "Stopping active user manager", ctx.Err())
 			return
 		case user := <-userCh:
 			activeUsers = append(activeUsers, user)
@@ -87,7 +88,7 @@ func processLogs(ctx context.Context, id int, c cache.Cache, contract types.Cont
 		return err
 	}
 
-	log.Logln(0, "rule:", id, "-", len(logs), "logs found from block:", fromBlock, "to:", toBlock)
+	log.Debug("rule:", id, "-", len(logs), "logs found from block:", fromBlock, "to:", toBlock)
 	if err != nil {
 		return err
 	}

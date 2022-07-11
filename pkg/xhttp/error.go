@@ -2,9 +2,10 @@ package xhttp
 
 import (
 	"encoding/json"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"net/http"
 	"strconv"
+
+	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 )
 
 type APIError struct {
@@ -29,12 +30,12 @@ func Error(w http.ResponseWriter, err error, code int) bool {
 		log.Error(err)
 		err = enc.Encode(APIError{Message: "Something went wrong", Code: strconv.Itoa(code)})
 	} else {
-		log.Logln(0, err)
+		log.Error(err)
 		err = enc.Encode(APIError{Message: err.Error(), Code: strconv.Itoa(code)})
 	}
 
 	if err != nil {
-		log.Logln(0, err) // If this happens, it's a programmer mistake
+		log.Error(err) // If this happens, it's a programmer mistake
 	}
 
 	return true

@@ -22,12 +22,23 @@ func main() {
 }
 
 func start() error {
-	configPath, ok := os.LookupEnv("CONFIG_PATH")	
+	configPath, ok := os.LookupEnv("CONFIG_PATH")
 	if !ok {
 		configPath = configFileName
 	}
-	cfg := tokensvc.LoadConfig(configPath)
+	cfg, err := tokensvc.LoadConfig(configPath)
+	if err != nil {
+		panic(err)
+	}
 	cfg.PrettyPrint()
+
+	logger, err := log.NewLogger(cfg.LogLevel.Level, &cfg.Sentry)
+
+	if err != nil {
+		log.Fatalf("%+v", err)
+	}
+
+	defer logger.Sync()
 
 	svc, cleanup, err := tokensvc.NewMQTTTokenService(cfg)
 	if err != nil {
@@ -43,9 +54,9 @@ func start() error {
 		return err
 	}
 
-	log.Logln(0, "Initialized the Token Service...")
+	log.Debug("Initialized the Token Service...")
 	wait()
-	log.Logln(0, "Terminating...")
+	log.Debug("Terminating...")
 
 	if err := tokensvc.DumpMetrics("metrics/metrics.txt", expfmt.FmtText); err != nil {
 		return err

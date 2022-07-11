@@ -3,8 +3,9 @@ package web3
 import (
 	"context"
 	"errors"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 	"math/big"
+
+	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 
 	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
@@ -132,6 +133,6 @@ func (lm *RuleManager) DeleteRule(ctx context.Context, id int) {
 		l.Stop(ctx)
 		delete(lm.trackers, id)
 	} else {
-		log.Logln(0, "rule manager", "could not find rule with id:", id)
+		log.Debug("rule manager", "could not find rule with id:", id)
 	}
 }

@@ -2,11 +2,12 @@ package eth
 
 import (
 	"context"
+	"math/big"
+	"time"
+
 	"github.com/OdysseyMomentumExperience/token-service/pkg/cache"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
-	"math/big"
-	"time"
 
 	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/redis"
@@ -123,7 +124,7 @@ func getCachedBalancesWithRetry(ctx context.Context, id int, c cache.Cache, addr
 			if err == nil {
 				return tb
 			} else {
-				log.Logln(0, "Error in get cached rule balance:", err, "retrying in 5 seconds")
+				log.Debug("Error in get cached rule balance:", err, "retrying in 5 seconds")
 			}
 		}
 	}

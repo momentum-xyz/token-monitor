@@ -1,6 +1,8 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/OdysseyMomentumExperience/token-service/pkg/constants"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/types"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
@@ -8,7 +10,6 @@ import (
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
 	"github.com/pkg/errors"
-	"net/http"
 )
 
 type TokenNameHandler struct {

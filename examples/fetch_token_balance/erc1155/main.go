@@ -18,15 +18,15 @@ const tokenID = 123
 func main() {
 	conn, err := ethclient.Dial(infuraURL)
 	if err != nil {
-		log.Logln(0, err)
+		log.Error(err)
 	}
 	defer conn.Close()
 
 	//ERC1155 ?.
 	contract, err := abigen.NewERC1155(common.HexToAddress(contractAddr), conn)
 	if err != nil {
-		log.Logln(0, "Fatal", err)
+		log.Error(err)
 	}
 	amt, _ := contract.BalanceOf(&bind.CallOpts{}, common.HexToAddress(userAddr), big.NewInt(tokenID))
-	log.Logln(0, "ERC 1155 Balance:", amt)
+	log.Debug("ERC 1155 Balance:", amt)
 }

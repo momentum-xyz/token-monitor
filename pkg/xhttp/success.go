@@ -2,8 +2,9 @@ package xhttp
 
 import (
 	"encoding/json"
-	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"net/http"
+
+	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 )
 
 type APISuccess struct {
@@ -21,7 +22,7 @@ func Success(w http.ResponseWriter, msg string) bool {
 
 	err := enc.Encode(APISuccess{Message: msg})
 	if err != nil {
-		log.Logln(0, err) // If this happens, it's a programmer mistake
+		log.Error(err) // If this happens, it's a programmer mistake
 	}
 
 	return true
