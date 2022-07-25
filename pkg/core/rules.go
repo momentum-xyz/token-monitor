@@ -1,4 +1,4 @@
-package web3
+package core
 
 import (
 	"encoding/json"

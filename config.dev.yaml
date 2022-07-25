@@ -47,10 +47,11 @@ network_manager:
         - url: https://ropsten.infura.io/v3/my-2nd-rpc
           rate_limit: 100
           batch_size: 1
-    # - name: polkadot
-    #   type: polkadot
-    #   hosts:
-    #     - url: https://polkadot.infura.dummy
-    #       rateLimit: 100
-    #       batchSize: 1
+    - name: rococo
+      type: substrate
+      hosts:
+        - url: wss://rococo-rpc.polkadot.io
+          rateLimit: 100
+          batchSize: 1
+
 log_level: debug

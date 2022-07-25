@@ -17,9 +17,9 @@ import (
 )
 
 type ClientManager struct {
-	transport http.RoundTripper
-	ethereum  map[string]*EthereumLoadBalancer
-
+	transport    http.RoundTripper
+	ethereum     map[string]*EthereumLoadBalancer
+	substrate    map[string]*SubstrateClient
 	networkTypes map[string]string
 }
 
@@ -31,15 +31,20 @@ func NewClientManager(cfg *Config) (*ClientManager, error) {
 
 	cm := &ClientManager{
 		ethereum:     make(map[string]*EthereumLoadBalancer),
+		substrate:    make(map[string]*SubstrateClient),
 		transport:    newTransport(),
 		networkTypes: networkTypes,
 	}
 	var err error
 
+	// 1 verify register polkadot network
 	for _, network := range cfg.Networks {
 		switch network.Type {
 		case constants.NetworkTypeEthereum:
 			err = cm.RegisterEthereumNetwork(network)
+
+		case constants.NetworkTypeSubstrate:
+			err = cm.RegisterSubstrateNetwork(network)
 
 		default:
 			return nil, errors.Errorf("unknown network type %q", network.Type)
@@ -71,6 +76,16 @@ func (c *ClientManager) RegisterEthereumNetwork(networkConfig *NetworkConfig) er
 	return nil
 }
 
+func (c *ClientManager) RegisterSubstrateNetwork(networkConfig *NetworkConfig) error {
+	sc, err := NewSubstrateClient(networkConfig)
+	if err != nil {
+		return err
+
+	}
+	c.substrate[networkConfig.Name] = sc
+	return nil
+}
+
 func (c *ClientManager) GetNetworkType(networkName string) string {
 	return c.networkTypes[networkName]
 }
@@ -83,6 +98,10 @@ func (c *ClientManager) GetEthereumClient(networkName string) (*ethclient.Client
 	}
 
 	return clients.GetClient(), nil
+}
+
+func (c *ClientManager) GetSubstrateClient(networkName string) (*SubstrateClient, error) {
+	return c.substrate[networkName], nil
 }
 
 func newTransport() *http.Transport {

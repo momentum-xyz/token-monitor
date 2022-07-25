@@ -1,7 +1,8 @@
-package web3
+package core
 
 import (
 	"encoding/json"
+
 	"github.com/OdysseyMomentumExperience/token-service/pkg/web3/eth"
 	"github.com/ory/x/errorsx"
 )
@@ -10,8 +11,8 @@ type NetworkID string
 
 type User struct {
 	// Addresses map[NetworkID]*Web3Address
-	EthereumAddress string `json:"ethereum_address"`
-	PolkadotAddress string `json:"polkadot_address"`
+	EthereumAddress string `json:"ethereum_address,omitempty"`
+	PolkadotAddress string `json:"polkadot_address,omitempty"`
 }
 
 func UnmarshalUser(userJson []byte) (*User, error) {
@@ -30,9 +31,11 @@ func UnmarshalUsers(usersString []byte) ([]*User, error) {
 		return nil, errorsx.WithStack(err)
 	}
 	for _, user := range users {
-		_, err := eth.HexToAddress(user.EthereumAddress)
-		if err != nil {
-			return nil, err
+		if user.EthereumAddress != "" {
+			_, err := eth.HexToAddress(user.EthereumAddress)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 	return users, nil

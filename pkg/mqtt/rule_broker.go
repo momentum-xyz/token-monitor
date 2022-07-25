@@ -3,6 +3,7 @@ package mqtt
 import (
 	"context"
 
+	"github.com/OdysseyMomentumExperience/token-service/pkg/core"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/log"
 	"github.com/OdysseyMomentumExperience/token-service/pkg/web3"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
@@ -66,7 +67,9 @@ func (p *RuleBroker) start(ctx context.Context) {
 	log.Debug("rule broker -", "starting rule broker...")
 
 	err := p.initializeRuleManager(ctx)
-	log.Error(err)
+	if err != nil {
+		log.Error(err)
+	}
 	log.Debug("rule broker -", "starting rule broker... done")
 
 	for {
@@ -89,13 +92,13 @@ func (p *RuleBroker) initializeRuleManager(ctx context.Context) error {
 	log.Debug("rule broker -", "waiting for initial rules and users")
 
 	//TODO: refactor structure of message for users coming from backend service - for discussion
-	users, err := web3.UnmarshalUsers(<-p.activeUsersChannel)
+	users, err := core.UnmarshalUsers(<-p.activeUsersChannel)
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
 	log.Debug("rule broker -", "users list created")
 
-	rules, err := web3.UnmarshalRuleDefinitions(<-p.activeRulesChannel)
+	rules, err := core.UnmarshalRuleDefinitions(<-p.activeRulesChannel)
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
@@ -105,7 +108,7 @@ func (p *RuleBroker) initializeRuleManager(ctx context.Context) error {
 }
 
 func handleNewRule(ctx context.Context, ruleJSON []byte, manager *web3.RuleManager) error {
-	rule, err := web3.UnmarshalRuleDefinition(ruleJSON)
+	rule, err := core.UnmarshalRuleDefinition(ruleJSON)
 	if err != nil {
 		return errorsx.WithStack(err)
 	}
@@ -126,7 +129,7 @@ func handleNewRule(ctx context.Context, ruleJSON []byte, manager *web3.RuleManag
 }
 
 func handleNewUser(ctx context.Context, userJSON []byte, ruleManager *web3.RuleManager) error {
-	user, err := web3.UnmarshalUser(userJSON)
+	user, err := core.UnmarshalUser(userJSON)
 	if err != nil {
 		return errorsx.WithStack(err)
 	}

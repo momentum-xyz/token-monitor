@@ -26,7 +26,9 @@ func startBlockChecker(ctx context.Context, id int, client *ethclient.Client, bl
 			latestBlock, err = handleBlockPoll(ctx, id, client, latestBlock, blockCh...)
 		}
 
-		log.Error(err)
+		if err != nil {
+			log.Error(err)
+		}
 	}
 }
 
