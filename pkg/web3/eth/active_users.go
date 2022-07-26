@@ -33,6 +33,7 @@ func manageActiveUsers(ctx context.Context, id int, c cache.Cache, contract type
 			// new active user whose balance we just checked, so no need to verify again on the current block
 			continue
 		case blockNumber := <-blockCh:
+			//TODO block validity
 			if blockNumber >= 20 {
 				latestBlock = blockNumber - 20
 			} else {
